@@ -20,6 +20,7 @@ public class Tela extends javax.swing.JFrame {
         initComponents();
     }
     
+    
     public Tela(Users user) {
         initComponents();
         this.setExtendedState(MAXIMIZED_BOTH);
