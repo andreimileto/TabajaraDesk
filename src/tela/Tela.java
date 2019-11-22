@@ -80,7 +80,7 @@ public class Tela extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCheckinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCheckinActionPerformed
-        Checkin check = new Checkin();
+        CadastroCheckin check = new CadastroCheckin();
         check.setVisible(true);
     }//GEN-LAST:event_btnCheckinActionPerformed
 
