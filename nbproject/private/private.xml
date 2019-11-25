@@ -3,25 +3,19 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/AndreiMileto/Documents/NetBeansProjects/TabajaraDesk/src/entidade/ActivityEvent.java</file>
-            <file>file:/C:/Users/AndreiMileto/Documents/NetBeansProjects/TabajaraDesk/src/controle/ControleCheckin.java</file>
-            <file>file:/C:/Users/AndreiMileto/Documents/NetBeansProjects/TabajaraDesk/src/controle/ControleClient.java</file>
+            <file>file:/C:/Users/AndreiMileto/Documents/NetBeansProjects/TabajaraDesk/src/entidade/Users.hbm.xml</file>
+            <file>file:/C:/Users/AndreiMileto/Documents/NetBeansProjects/TabajaraDesk/src/entidade/Checkin.hbm.xml</file>
+            <file>file:/C:/Users/AndreiMileto/Documents/NetBeansProjects/TabajaraDesk/src/tela/CadastroCheckin.java</file>
             <file>file:/C:/Users/AndreiMileto/Documents/NetBeansProjects/TabajaraDesk/src/DAO/ActivityEventDAO.java</file>
-            <file>file:/C:/Users/AndreiMileto/Documents/NetBeansProjects/TabajaraDesk/src/hibernate.cfg.xml</file>
+            <file>file:/C:/Users/AndreiMileto/Documents/NetBeansProjects/TabajaraDesk/src/entidade/Checkin.java</file>
+            <file>file:/C:/Users/AndreiMileto/Documents/NetBeansProjects/TabajaraDesk/src/entidade/Client.hbm.xml</file>
             <file>file:/C:/Users/AndreiMileto/Documents/NetBeansProjects/TabajaraDesk/src/tela/CadastroRapido.java</file>
-            <file>file:/C:/Users/AndreiMileto/Documents/NetBeansProjects/TabajaraDesk/src/apoio/ConexaoBD.java</file>
+            <file>file:/C:/Users/AndreiMileto/Documents/NetBeansProjects/TabajaraDesk/src/entidade/ActivityEvent.hbm.xml</file>
             <file>file:/C:/Users/AndreiMileto/Documents/NetBeansProjects/TabajaraDesk/src/entidade/Event.hbm.xml</file>
-            <file>file:/C:/Users/AndreiMileto/Documents/NetBeansProjects/TabajaraDesk/src/entidade/Client.java</file>
-            <file>file:/C:/Users/AndreiMileto/Documents/NetBeansProjects/TabajaraDesk/src/controle/ControleActivityEvent.java</file>
-            <file>file:/C:/Users/AndreiMileto/Documents/NetBeansProjects/TabajaraDesk/src/tela/Login.java</file>
-            <file>file:/C:/Users/AndreiMileto/Documents/NetBeansProjects/TabajaraDesk/src/tabajaradesk/TabajaraDesk.java</file>
-            <file>file:/C:/Users/AndreiMileto/Documents/NetBeansProjects/TabajaraDesk/src/controle/ControleEvent.java</file>
+            <file>file:/C:/Users/AndreiMileto/Documents/NetBeansProjects/TabajaraDesk/src/DAO/CheckinDAO.java</file>
             <file>file:/C:/Users/AndreiMileto/Documents/NetBeansProjects/TabajaraDesk/src/tela/Tela.java</file>
-            <file>file:/C:/Users/AndreiMileto/Documents/NetBeansProjects/TabajaraDesk/src/controle/ControleUsers.java</file>
-            <file>file:/C:/Users/AndreiMileto/Documents/NetBeansProjects/TabajaraDesk/src/DAO/UserDAO.java</file>
-            <file>file:/C:/Users/AndreiMileto/Documents/NetBeansProjects/TabajaraDesk/src/apoio/hibernate.reveng.xml</file>
             <file>file:/C:/Users/AndreiMileto/Documents/NetBeansProjects/TabajaraDesk/src/DAO/ClientDAO.java</file>
-            <file>file:/C:/Users/AndreiMileto/Documents/NetBeansProjects/TabajaraDesk/src/tela/Checkin.java</file>
+            <file>file:/C:/Users/AndreiMileto/Documents/NetBeansProjects/TabajaraDesk/src/apoio/Scripts.sql</file>
             <file>file:/C:/Users/AndreiMileto/Documents/NetBeansProjects/TabajaraDesk/src/tela/TelaPrincipal.java</file>
         </group>
     </open-files>
