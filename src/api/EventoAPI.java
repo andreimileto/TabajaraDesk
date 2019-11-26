@@ -5,6 +5,7 @@
  */
 package api;
 
+import DAO.EventDAO;
 import DAO.MensagemRetorno;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -21,7 +22,8 @@ import org.json.JSONObject;
 public class EventoAPI {
     
      
-    private final String url = "http://localhost:5004/api";
+    // private final String url = "http://localhost:5004/api";
+       private final String url = "http://localhost:8080/api/events";
     private final String cidade = "3459035"; //lajeado
     private final String apiKey = "5BF2CDD9AF84BB7BB06B7361AC29C468BED3E9BFC8";
     private final String lang = "pt";
@@ -95,6 +97,7 @@ public class EventoAPI {
         Evento evento = new Evento();
         evento.setId(json.getInt("id"));
         evento.setDescricao(json.getString("name"));
+        
         return evento;
     }
     
@@ -104,6 +107,9 @@ public class EventoAPI {
             eventos.add(JSONtoObject((JSONObject) event));
         });
         System.out.println(eventos.toString());
+        
+        EventDAO eventDAO = new EventDAO();
+        eventDAO.salvar(eventos);
 //        Evento evento = new Evento();
 //            
 //        evento.setId(json.getInt("id"));
