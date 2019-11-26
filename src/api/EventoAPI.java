@@ -7,7 +7,9 @@ package api;
 
 import DAO.MensagemRetorno;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -19,28 +21,25 @@ import org.json.JSONObject;
 public class EventoAPI {
     
      
-    private final String url = "http://api.openweathermap.org/data/2.5";
+    private final String url = "http://localhost:5004/api";
     private final String cidade = "3459035"; //lajeado
-    private final String apiKey = "047aee25e46d6df9678cf5fe3faa467f";
+    private final String apiKey = "5BF2CDD9AF84BB7BB06B7361AC29C468BED3E9BFC8";
     private final String lang = "pt";
     
     private final ApiRepository api = new OkHttpAPI();
     
-    public static void main(String[] args) throws IOException {
-        EventoAPI eventoAPI = new EventoAPI();
-    //    eventoAPI.proximos5Dias();
-    }
-    
-    public MensagemRetorno atual() throws IOException {
-        String finalUrl = url+"/weather?id="+cidade+"&lang="+lang+"&APPID="+apiKey+"&units=metric";
+    public MensagemRetorno getEventos() throws IOException {
+        String finalUrl = url;
         String resposta = api.get(finalUrl, ApiRepository.JSON, null);
       MensagemRetorno msg = new MensagemRetorno();
         
         try {
-            JSONObject json = new JSONObject(resposta);
-            msg.setObjeto(this.JSONtoObject(json));
+            JSONArray json = new JSONArray(resposta);
+            this.JSONtoList(json);
+            //msg.setObjeto(this.JSONtoObject(json));
             msg.setSucesso(true);
         } catch(JSONException e) {
+            e.printStackTrace();
             msg.setMensagem("As chamadas a API foram esgotadas! Aguarde o tempo necessário para nova requisição");
         }        
         return msg;
@@ -94,14 +93,26 @@ public class EventoAPI {
     
     private Evento JSONtoObject(JSONObject json){
         Evento evento = new Evento();
-            
         evento.setId(json.getInt("id"));
-        evento.setDescricao(json.getString("nome"));
+        evento.setDescricao(json.getString("name"));
+        return evento;
+    }
+    
+    private List<Evento> JSONtoList(JSONArray json){
+        List<Evento> eventos = new ArrayList<>();
+        json.forEach(event -> {
+            eventos.add(JSONtoObject((JSONObject) event));
+        });
+        System.out.println(eventos.toString());
+//        Evento evento = new Evento();
+//            
+//        evento.setId(json.getInt("id"));
+//        evento.setDescricao(json.getString("nome"));
         //previsaoTempo.setTemperatura(this.getTemperatura(json));
         //previsaoTempo.setTemperaturaMaxima(this.getTemperaturaMinima(json));
         //previsaoTempo.setTemperaturaMinima(this.getTemperaturaMinima(json));
         
-        return evento;
+        return new ArrayList<>();
     }
     
     

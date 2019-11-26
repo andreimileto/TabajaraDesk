@@ -5,6 +5,7 @@
  */
 package tabajaradesk;
 
+import api.EventoAPI;
 import apoio.ConexaoBD;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
@@ -44,7 +45,12 @@ public class TabajaraDesk {
 //            JOptionPane.showMessageDialog(null, "conectou");
             Login senha = new Login();
             senha.setVisible(true);
-
+            EventoAPI api = new EventoAPI();
+            try {
+                            api.getEventos();
+            } catch (Exception e) {
+                
+            }
             
         } else {
             JOptionPane.showMessageDialog(null, "Erro ao abrir banco de dados, entre em contato com o suporte!");
