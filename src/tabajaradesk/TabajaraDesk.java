@@ -5,8 +5,12 @@
  */
 package tabajaradesk;
 
+import DAO.ActivityEventDAO;
+import DAO.ClientDAO;
+import DAO.EventDAO;
 import api.EventoAPI;
 import apoio.ConexaoBD;
+import entidade.Event;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import tela.Login;
@@ -22,13 +26,8 @@ public class TabajaraDesk {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        
-                
-        
-       
-     //   Util.enviodeEmail();
-        
-        
+
+        //   Util.enviodeEmail();
         try {
             for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -39,15 +38,39 @@ public class TabajaraDesk {
         } catch (Exception e) {
             // If Nimbus is not available, you can set the GUI to another look and feel.
         }
-
+        
         if (ConexaoBD.getInstance()
                 .getConnection() != null) {
 //            JOptionPane.showMessageDialog(null, "conectou");
             Login senha = new Login();
             senha.setVisible(true);
+
+            //
+//            Event event = new Event();
+//            
+//            event.setName("testeeee new");
+//            event.setSync('N');
+//            event.setId(10);
+//            EventDAO dao = new EventDAO();
+//            dao.salvar(event);
+            //
             EventoAPI api = new EventoAPI();
             try {
-                            api.getEventos();
+
+                
+                ActivityEventDAO actDAO = new ActivityEventDAO();
+                
+                actDAO.deleteAll();
+                EventDAO event = new EventDAO();
+                event.deleteAll();
+                
+                ClientDAO client = new ClientDAO();
+                client.deleteAll();
+                
+                api.getEventos();
+                api.getClientes();
+                api.getActivityEvent();
+                
             } catch (Exception e) {
                 
             }
@@ -55,8 +78,6 @@ public class TabajaraDesk {
         } else {
             JOptionPane.showMessageDialog(null, "Erro ao abrir banco de dados, entre em contato com o suporte!");
         }
-
-        
         
     }
     

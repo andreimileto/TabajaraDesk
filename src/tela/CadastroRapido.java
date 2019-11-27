@@ -148,7 +148,9 @@ public class CadastroRapido extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
-
+        ClientDAO cliendao = new ClientDAO();
+        
+        client.setId(cliendao.proxID());
         client.setName(tfdNomePessoa.getText());
         client.setEmail(tfdEmail.getText());
 
@@ -161,7 +163,7 @@ public class CadastroRapido extends javax.swing.JFrame {
         }
 
         client.setSync('N');
-        event.setId(Integer.parseInt(tfdEvento.getText()));
+       // event.setId(Integer.parseInt(tfdEvento.getText()));
         ActivityEvent actEvent = new ActivityEvent();
         actEvent.setClient(client);
         actEvent.setEvent(event);
@@ -177,9 +179,11 @@ public class CadastroRapido extends javax.swing.JFrame {
         ClientDAO clientDAO = new ClientDAO();
         clientDAO.salvar(client);
         client.setId(clientDAO.ultimoId(client));
-        
+
         actEvent.setClient(client);
+
         ActivityEventDAO dao = new ActivityEventDAO();
+        actEvent.setId(dao.proxID(actEvent));
         if (dao.salvar(actEvent)) {
             JOptionPane.showMessageDialog(rootPane, "Cadastro Salvo com sucesso!");
         } else {
@@ -191,10 +195,18 @@ public class CadastroRapido extends javax.swing.JFrame {
 
     private void btnListarEventoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarEventoActionPerformed
 //        event.setId(Integer.parseInt(tfdEvento.getText()));
+       // int auxIdEvent = event.getId();
+     //   String auxDescricaoCidade = cliente.getCidade().getDescricao();
+       // Event event = new Event();
+        JdgListaEvento eve = new JdgListaEvento(null, true, event);
+        eve.setVisible(true);
+        
+        tfdEvento.setText(event.getName());
+        
     }//GEN-LAST:event_btnListarEventoActionPerformed
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
-this.dispose();
+        this.dispose();
     }//GEN-LAST:event_btnVoltarActionPerformed
 
     /**

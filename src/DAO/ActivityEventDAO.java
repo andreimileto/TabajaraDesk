@@ -19,8 +19,10 @@ import org.hibernate.Transaction;
  * @author AndreiMileto
  */
 public class ActivityEventDAO {
+
     ActivityEvent actEvent;
-     public boolean salvar(Object o) {
+
+    public boolean salvar(Object o) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         boolean retorno = false;
         try {
@@ -28,7 +30,7 @@ public class ActivityEventDAO {
             session = HibernateUtil.getSessionFactory().openSession();
 
             Transaction t = session.beginTransaction();
-            System.out.println("sql = "+t);
+            System.out.println("sql = " + t);
             session.merge(o);
 
             t.commit();
@@ -42,8 +44,8 @@ public class ActivityEventDAO {
         }
         return retorno;
     }
-     
-           public int consultaCheckin(ActivityEvent actEvent) {
+
+    public int consultaCheckin(ActivityEvent actEvent) {
 
         this.actEvent = actEvent;
         List resultado = null;
@@ -55,11 +57,11 @@ public class ActivityEventDAO {
 
             String sql = "";
 
-            sql = "select id from ActivityEvent  where id_event = "+actEvent.getEvent().getId()
-                    + " and id_client = "+actEvent.getClient().getId();
-            
+            sql = "select id from ActivityEvent  where id_event = " + actEvent.getEvent().getId()
+                    + " and id_client = " + actEvent.getClient().getId();
+
             String sel = sql;
-             System.out.println(sel + " select ActivityEvent");
+            System.out.println(sel + " select ActivityEvent");
             org.hibernate.Query q = session.createQuery(sql);
             resultado = q.list();
             System.out.println(resultado + " ---- resultado");
@@ -68,7 +70,7 @@ public class ActivityEventDAO {
                 //lista.add(tar);
                 System.out.println(id + " --- id");
             }
-            
+
 //
         } catch (HibernateException he) {
             he.printStackTrace();
@@ -77,5 +79,60 @@ public class ActivityEventDAO {
 
         return id;
     }
+
+    public int proxID(ActivityEvent actEvent) {
+
+        this.actEvent = actEvent;
+        List resultado = null;
+        ArrayList<ActivityEvent> lista = new ArrayList<>();
+        int id = 0;
+        try {
+            Session session = HibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
+
+            String sql = "";
+
+            sql = "select max(id) from ActivityEvent";
+
+            String sel = sql;
+            System.out.println(sel + " select ActivityEvent");
+            org.hibernate.Query q = session.createQuery(sql);
+            resultado = q.list();
+            System.out.println(resultado + " ---- resultado");
+            for (Object o : resultado) {
+                id = ((Integer) ((Object) o));
+                //lista.add(tar);
+                System.out.println(id + " --- id");
+            }
+
+//
+        } catch (HibernateException he) {
+            he.printStackTrace();
+        }// finally {
+//            session.close();
+
+        return id + 1;
+    }
+
+    public void deleteAll() {
+
+        try {
+            
+            Session session = HibernateUtil.getSessionFactory().openSession();
+              Transaction t = session.beginTransaction();
+   // Session session = HibernateUtil.currentSession();
     
+        String hql = "delete from ActivityEvent";
+        Query query = session.createQuery(hql);
+        //query.setString("name","Product 1");
+        int rowCount = query.executeUpdate();
+        t.commit();
+//
+        } catch (HibernateException he) {
+            he.printStackTrace();
+        }// finally {
+//            session.close();
+
+    }
+
 }

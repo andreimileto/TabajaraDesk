@@ -37,7 +37,7 @@ CREATE TABLE client (
   id serial ,
   name VARCHAR(200) NOT NULL,
   email VARCHAR(200) NOT NULL,
-  birth_date DATE NOT NULL,
+  birth_date DATE ,
   sync CHAR NOT NULL,
   PRIMARY KEY (id));
 -- ENGINE = InnoDB;
@@ -49,8 +49,8 @@ CREATE TABLE client (
 CREATE TABLE event (
   id serial ,
   name VARCHAR(45) NOT NULL,
-  init_hour VARCHAR(45) NOT NULL,
-  final_hour VARCHAR(45) NOT NULL,
+  init_hour VARCHAR(45) ,
+  final_hour VARCHAR(45) ,
   sync CHAR NOT NULL,
   PRIMARY KEY (id));
 -- ENGINE = InnoDB;
@@ -63,8 +63,8 @@ CREATE TABLE activity_event (
   id serial ,
   id_event INT NOT NULL,
   id_client INT NOT NULL,
-  date DATE NOT NULL,
-  status CHAR NOT NULL,
+  date DATE ,
+  status CHAR ,
   sync CHAR NOT NULL,
   PRIMARY KEY (id),
 --  INDEX fk_activity_event_event_idx (id_event) ,

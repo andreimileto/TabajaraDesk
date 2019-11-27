@@ -19,10 +19,17 @@ import javax.swing.JOptionPane;
  */
 public class CadastroCheckin extends javax.swing.JFrame {
 
+    Event event;
+    Client client;
+
     /**
      * Creates new form CadastroCheckin
      */
     public CadastroCheckin() {
+        Event event = new Event();
+        Client client = new Client();
+        this.event = event;
+        this.client = client;
         initComponents();
     }
 
@@ -41,6 +48,8 @@ public class CadastroCheckin extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         tfdEvento = new javax.swing.JTextField();
+        btnEvento = new javax.swing.JButton();
+        btnClient = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -62,6 +71,20 @@ public class CadastroCheckin extends javax.swing.JFrame {
 
         jLabel1.setText("id evento:");
 
+        btnEvento.setText("Evento");
+        btnEvento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEventoActionPerformed(evt);
+            }
+        });
+
+        btnClient.setText("Cliente");
+        btnClient.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClientActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -78,25 +101,31 @@ public class CadastroCheckin extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(tfdUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(tfdUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnClient))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(tfdEvento, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(158, Short.MAX_VALUE))
+                        .addComponent(tfdEvento, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnEvento)))
+                .addContainerGap(74, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(46, 46, 46)
+                .addGap(45, 45, 45)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(tfdEvento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tfdEvento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEvento))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(tfdUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 169, Short.MAX_VALUE)
+                    .addComponent(tfdUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnClient))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 164, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnVoltar)
                     .addComponent(btnConfirmar))
@@ -111,12 +140,12 @@ public class CadastroCheckin extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVoltarActionPerformed
 
     private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
-        Client client = new Client();
-        Event event = new Event();
+     //   Client client = new Client();
+     //   Event event = new Event();
         ActivityEvent actEvent = new ActivityEvent();
 
-        client.setId(Integer.parseInt(tfdUsuario.getText()));
-        event.setId(Integer.parseInt(tfdEvento.getText()));
+     //   client.setId(Integer.parseInt(tfdUsuario.getText()));
+     //   event.setId(Integer.parseInt(tfdEvento.getText()));
         actEvent.setClient(client);
         actEvent.setEvent(event);
         ActivityEventDAO actEventDAO = new ActivityEventDAO();
@@ -131,17 +160,32 @@ public class CadastroCheckin extends javax.swing.JFrame {
             CheckinDAO chkDAO = new CheckinDAO();
             if (chkDAO.salvar(chk)) {
                 JOptionPane.showMessageDialog(rootPane, "Checkin feito com sucesso! FEITORIA!!!!");
-            }else{
+            } else {
                 JOptionPane.showMessageDialog(rootPane, "Errooooou!!!!\n"
-                    + "Fez Merda");
+                        + "Fez Merda");
             }
 
-        }else{
+        } else {
             JOptionPane.showMessageDialog(rootPane, "Evento não cadastrado para esse usuário! \n"
-                + "Favor, efetuar um cadastro rápido");
+                    + "Favor, efetuar um cadastro rápido");
         }
 
     }//GEN-LAST:event_btnConfirmarActionPerformed
+
+    private void btnEventoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEventoActionPerformed
+        JdgListaEvento listaEventos = new JdgListaEvento(null, true, event);
+        listaEventos.setVisible(true);
+        
+        
+        
+        tfdEvento.setText(event.getName());
+    }//GEN-LAST:event_btnEventoActionPerformed
+
+    private void btnClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientActionPerformed
+        JdgListaClient listaClientes = new JdgListaClient(null, true, client);
+        listaClientes.setVisible(true);
+        tfdUsuario.setText(client.getName());
+    }//GEN-LAST:event_btnClientActionPerformed
 
     /**
      * @param args the command line arguments
@@ -179,7 +223,9 @@ public class CadastroCheckin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnClient;
     private javax.swing.JButton btnConfirmar;
+    private javax.swing.JButton btnEvento;
     private javax.swing.JButton btnVoltar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
