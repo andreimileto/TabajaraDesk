@@ -7,6 +7,8 @@ package DAO;
 
 import apoio.HibernateUtil;
 import entidade.Checkin;
+import java.util.ArrayList;
+import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -41,4 +43,33 @@ public class CheckinDAO {
         }
         return retorno;
     }
+      
+      
+      
+            public ArrayList<Checkin> listarSync() {
+       /// this.client=client;
+        List resultado = null;
+
+        ArrayList<Checkin> lista = new ArrayList<>();
+        try {
+            Session session = HibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
+            String sql = "from Checkin where Sync = 'N' ";
+            String sel = sql;
+            System.out.println(sel);
+            org.hibernate.Query q = session.createQuery(sql);
+
+            resultado = q.list();
+
+            for (Object o : resultado) {
+                Checkin check = ((Checkin) ((Object) o));
+                lista.add(check);
+            }
+
+        } catch (HibernateException he) {
+            he.printStackTrace();
+        }
+        return lista;
+    }
+      
 }

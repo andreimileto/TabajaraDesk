@@ -9,6 +9,7 @@ import DAO.ActivityEventDAO;
 import DAO.ClientDAO;
 import DAO.EventDAO;
 import DAO.MensagemRetorno;
+import static api.ApiRepository.JSON;
 import entidade.ActivityEvent;
 import entidade.Client;
 import entidade.Event;
@@ -16,6 +17,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import okhttp3.FormBody;
+import okhttp3.HttpUrl;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
@@ -35,7 +38,7 @@ public class EventoAPI {
     // private final String url = "http://localhost:5004/api";
     private final String url = "http://localhost:8080/api/events";
     //   private final String cidade = "3459035"; //lajeado
-       private final String apiKey = "5BF2CDD9AF84BB7BB06B7361AC29C468BED3E9BFC8";
+    private final String apiKey = "5BF2CDD9AF84BB7BB06B7361AC29C468BED3E9BFC8";
     //   private final String lang = "pt";
 
     private final ApiRepository api = new OkHttpAPI();
@@ -44,7 +47,7 @@ public class EventoAPI {
         String finalUrl = url;
         String resposta = api.get(finalUrl, ApiRepository.JSON, null);
         MensagemRetorno msg = new MensagemRetorno();
-      //  test();
+        test();
 
         try {
             JSONArray json = new JSONArray(resposta);
@@ -99,7 +102,7 @@ public class EventoAPI {
         //   evento.setId(json.getInt("id"));
         //  evento.setDescricao(json.getString("name"));
         event.setName(json.getString("name"));
-        event.setSync('N');
+        event.setSync('T');
         event.setId(json.getInt("id"));
         EventDAO eventDAO = new EventDAO();
         eventDAO.salvar(event);
@@ -113,7 +116,7 @@ public class EventoAPI {
         client.setId(json.getInt("id"));
         client.setName(json.getString("name"));
         client.setEmail(json.getString("email"));
-        client.setSync('N');
+        client.setSync('T');
 
         ClientDAO clientDAO = new ClientDAO();
         clientDAO.salvar(client);
@@ -121,27 +124,26 @@ public class EventoAPI {
     }
 
     private ActivityEvent JSONtoObjectActivity(JSONObject json) {
-          Event event = new Event();
+        Event event = new Event();
         ActivityEvent activity = new ActivityEvent();
-        
-          Client client = new Client();
-           client.setId(json.getJSONObject("client").getInt("id"));
-           System.out.println(client.getId()+ "  achou o id");
-           event.setId(json.getJSONObject("event").getInt("id"));
-           System.out.println(event.getId()+ " achou o id do evento");
+
+        Client client = new Client();
+        client.setId(json.getJSONObject("client").getInt("id"));
+        System.out.println(client.getId() + "  achou o id");
+        event.setId(json.getJSONObject("event").getInt("id"));
+        System.out.println(event.getId() + " achou o id do evento");
         // client.setName(json.getString("name"));
         // client.setEmail(json.getString("email"));
-        activity.setSync('N');
+        activity.setSync('T');
         activity.setId(json.getInt("id"));
         System.out.println(activity.getId() + " achou o id act");
         activity.setClient(client);
         activity.setEvent(event);
         activity.setDate(null);
         activity.setStatus('T');
-        
+
         ActivityEventDAO actDAO = new ActivityEventDAO();
         actDAO.salvar(activity);
-        
 
         //    ClientDAO clientDAO = new ClientDAO();
         //    clientDAO.salvar(client);
@@ -156,8 +158,7 @@ public class EventoAPI {
         });
         System.out.println(eventos.toString());
 
-   //     EventDAO eventDAO = new EventDAO();
-
+        //     EventDAO eventDAO = new EventDAO();
         return new ArrayList<>();
     }
 
@@ -177,7 +178,7 @@ public class EventoAPI {
         List<ActivityEvent> activitys = new ArrayList<>();
         json.forEach(activity -> {
             activitys.add(JSONtoObjectActivity((JSONObject) activity));
-               System.out.println(activitys.get(0));
+            System.out.println(activitys.get(0));
         });
         System.out.println(activitys.get(0));
 
@@ -187,26 +188,52 @@ public class EventoAPI {
 
     public static void test() throws IOException {
 
-        String json = ""
-                + "{"                
-                + "\"id\": \"testclient\","
-                + "\"name\": \"testpass\","
-                + "\"email\": \"chaves\""               
-                + "}";
-
         OkHttpClient client = new OkHttpClient();
+        //   Request request = new Request.Builder()
+        //           .url("http://localhost:8080/api/users")
+        //           .build();
 
-        MediaType mediaType = MediaType.parse("application/json; charset=utf-8");
-        RequestBody body = RequestBody.create(mediaType, json);
+        //  Response response = client.newCall(request).execute();
+        //  System.out.println(response + " retorno post");
+        ////////////
+        HttpUrl.Builder urlBuilder = HttpUrl.parse("http://localhost:8080/api/users").newBuilder();
+        urlBuilder.addQueryParameter("100", "aaa");
+        urlBuilder.addQueryParameter("id", "name");
+        String url = urlBuilder.build().toString();
+
         Request request = new Request.Builder()
-                .url("http://localhost:8080/api/users")
-                .post(body)
-                .addHeader("cache-control", "no-cache")
-                .addHeader("postman-token", "5BF2CDD9AF84BB7BB06B7361AC29C468BED3E9BFC8")
+                .url(url)
                 .build();
 
         Response response = client.newCall(request).execute();
-        System.out.println(response + " testeeee");
+
+        System.out.println(response + " retorno post");
+
+        //   RequestBody formBody = new FormBody.Builder()
+        //           .add("message", "{\"name\":\"Guilherme\",\"id\":1,\"email\":\"guilherme@getnada.com\"}")
+        //           .build();
+        //   Request request = new Request.Builder()
+        //           .url("http://localhost:8080/api/users")
+        //           .post(formBody)
+        //           .build();
+        //try {
+        //    Response response = client.newCall(request).execute();
+        //    System.out.println(response + "response");
+        // Do something with the response.
+        // } catch (IOException e) {
+        //     e.printStackTrace();
+        // }
     }
 
+    public static void novotest() {
+        //public static final MediaType JSON  = MediaType.get("application/json; charset=utf-8");    
+
+        
+        
+    }
+    
+    
+    
+    
+    
 }

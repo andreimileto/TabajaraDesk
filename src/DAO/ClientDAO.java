@@ -163,5 +163,37 @@ public class ClientDAO {
         }
         return lista;
     }
+              
+              
+                     
+              public ArrayList<Client> listarSync() {
+       /// this.client=client;
+        List resultado = null;
+
+        ArrayList<Client> lista = new ArrayList<>();
+        try {
+            Session session = HibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
+            String sql = "from Client where Sync = 'N' "
+                
+                    + " order by name";
+            String sel = sql;
+            System.out.println(sel);
+            org.hibernate.Query q = session.createQuery(sql);
+
+            resultado = q.list();
+
+            for (Object o : resultado) {
+                Client cli = ((Client) ((Object) o));
+                lista.add(cli);
+            }
+
+        } catch (HibernateException he) {
+            he.printStackTrace();
+        }
+        return lista;
+    }
+              
+              
           
 }

@@ -60,7 +60,7 @@ public class CadastroRapido extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("ID Evento:");
+        jLabel1.setText("Evento:");
 
         jLabel2.setText("Nome Pessoa:");
 
@@ -145,6 +145,7 @@ public class CadastroRapido extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed

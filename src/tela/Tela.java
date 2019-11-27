@@ -5,7 +5,23 @@
  */
 package tela;
 
+import DAO.ActivityEventDAO;
+import DAO.CheckinDAO;
+import DAO.ClientDAO;
+import api.EventoAPI;
+import api.OkHttpAPI;
+import entidade.ActivityEvent;
+import entidade.Checkin;
+import entidade.Client;
 import entidade.Users;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  *
@@ -19,12 +35,11 @@ public class Tela extends javax.swing.JFrame {
     public Tela() {
         initComponents();
     }
-    
-    
+
     public Tela(Users user) {
         initComponents();
         this.setExtendedState(MAXIMIZED_BOTH);
-        
+
     }
 
     /**
@@ -38,6 +53,7 @@ public class Tela extends javax.swing.JFrame {
 
         btnCheckin = new javax.swing.JButton();
         btnCadastroRapido = new javax.swing.JButton();
+        btnEnviarDados = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -55,6 +71,13 @@ public class Tela extends javax.swing.JFrame {
             }
         });
 
+        btnEnviarDados.setText("Enviar Dados");
+        btnEnviarDados.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEnviarDadosActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -64,16 +87,20 @@ public class Tela extends javax.swing.JFrame {
                 .addComponent(btnCheckin, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnCadastroRapido, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(55, Short.MAX_VALUE))
+                .addGap(274, 274, 274)
+                .addComponent(btnEnviarDados, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(221, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(89, 89, 89)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnCadastroRapido, javax.swing.GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE)
-                    .addComponent(btnCheckin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(113, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnEnviarDados, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(btnCadastroRapido, javax.swing.GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE)
+                        .addComponent(btnCheckin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap(260, Short.MAX_VALUE))
         );
 
         pack();
@@ -88,6 +115,35 @@ public class Tela extends javax.swing.JFrame {
         CadastroRapido cad = new CadastroRapido();
         cad.setVisible(true);
     }//GEN-LAST:event_btnCadastroRapidoActionPerformed
+
+    private void btnEnviarDadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarDadosActionPerformed
+        ClientDAO clientDAO = new ClientDAO();
+        List<Client> clients = clientDAO.listarSync();
+
+        ActivityEventDAO actDAO = new ActivityEventDAO();
+        List<ActivityEvent> actEvent = actDAO.listarSync();
+
+        CheckinDAO checkDAO = new CheckinDAO();
+        List<Checkin> checks = checkDAO.listarSync();
+        for (int i = 0; i < clients.size(); i++) {
+            System.out.println(clients.get(i).getName());
+        }
+
+        //JSONArray jsonClients = new JSONArray(clients);
+        Map<String, Object> chaveValor = new HashMap<>();
+        chaveValor.put("users", clients);
+
+        try {
+            JSONObject jSONObject = new JSONObject(chaveValor);
+            OkHttpAPI api = new OkHttpAPI();
+            System.out.println("print json = " + jSONObject.toString());
+            api.post("http://localhost:8080/api/users", jSONObject.toString(), null, null);
+        } catch (IOException ex) {
+            Logger.getLogger(Tela.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+
+    }//GEN-LAST:event_btnEnviarDadosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -128,5 +184,6 @@ public class Tela extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCadastroRapido;
     private javax.swing.JButton btnCheckin;
+    private javax.swing.JButton btnEnviarDados;
     // End of variables declaration//GEN-END:variables
 }

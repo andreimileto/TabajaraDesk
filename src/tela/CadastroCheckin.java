@@ -67,9 +67,9 @@ public class CadastroCheckin extends javax.swing.JFrame {
             }
         });
 
-        jLabel2.setText("id usuario:");
+        jLabel2.setText("usuario:");
 
-        jLabel1.setText("id evento:");
+        jLabel1.setText("evento:");
 
         btnEvento.setText("Evento");
         btnEvento.addActionListener(new java.awt.event.ActionListener() {
@@ -110,7 +110,7 @@ public class CadastroCheckin extends javax.swing.JFrame {
                         .addComponent(tfdEvento, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnEvento)))
-                .addContainerGap(74, Short.MAX_VALUE))
+                .addContainerGap(85, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -133,6 +133,7 @@ public class CadastroCheckin extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed

@@ -134,5 +134,33 @@ public class ActivityEventDAO {
 //            session.close();
 
     }
+    
+    
+            public ArrayList<ActivityEvent> listarSync() {
+       /// this.client=client;
+        List resultado = null;
+
+        ArrayList<ActivityEvent> lista = new ArrayList<>();
+        try {
+            Session session = HibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
+            String sql = "from ActivityEvent where Sync = 'N' ";
+            String sel = sql;
+            System.out.println(sel);
+            org.hibernate.Query q = session.createQuery(sql);
+
+            resultado = q.list();
+
+            for (Object o : resultado) {
+                ActivityEvent act = ((ActivityEvent) ((Object) o));
+                lista.add(act);
+            }
+
+        } catch (HibernateException he) {
+            he.printStackTrace();
+        }
+        return lista;
+    }
+    
 
 }
